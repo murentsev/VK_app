@@ -13,13 +13,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBAction func signinPressed(_ sender: UIButton) {
-        guard let login = loginTextField.text, let password = passwordTextField.text else { return }
-        print("login: \(login) Password: \(password)")
-    }
+    @IBOutlet weak var signInButton: UIButton!
+    
+    
+    @IBAction func scrollTapped(_ gesture: UIGestureRecognizer) {
+          scrollView.endEditing(true)
+      }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        signInButton.layer.cornerRadius = 10
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,8 +52,33 @@ class ViewController: UIViewController {
         scrollView.contentInset = .zero
     }
     
-    @IBAction func scrollTapped(_ gesture: UIGestureRecognizer) {
-        scrollView.endEditing(true)
-    }
+  
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+          if identifier == "Home" {
+             let isValid = checkUserData()
+              if !isValid {
+                  showErrorAlert()
+              }
+              return isValid
+          }
+          return true
+      }
+      
+      func checkUserData() -> Bool {
+          return loginTextField.text == "admin" &&
+          passwordTextField.text == "admin"
+      }
+      
+      func showErrorAlert() {
+          let alert = UIAlertController(
+              title: "Ошибка",
+              message: "Неправильный логин или пароль",
+              preferredStyle: .alert
+          )
+          let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+          alert.addAction(action)
+          present(alert, animated: true, completion: nil)
+      }
 }
 
