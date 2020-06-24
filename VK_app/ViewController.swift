@@ -13,10 +13,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-   
+    @IBOutlet weak var signInButton: UIButton!
+    
+    
+    @IBAction func scrollTapped(_ gesture: UIGestureRecognizer) {
+          scrollView.endEditing(true)
+      }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        signInButton.layer.cornerRadius = 10
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,9 +52,7 @@ class ViewController: UIViewController {
         scrollView.contentInset = .zero
     }
     
-    @IBAction func scrollTapped(_ gesture: UIGestureRecognizer) {
-        scrollView.endEditing(true)
-    }
+  
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
           if identifier == "Home" {
