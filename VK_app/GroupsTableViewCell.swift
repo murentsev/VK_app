@@ -14,10 +14,17 @@ class GroupsTableViewCell: UITableViewCell {
     @IBOutlet weak var groupName: UILabel!
  
     func makeRounded() {
-          // friendImage.layer.borderWidth = 1
-           groupImage.layer.masksToBounds = false
-           //friendImage.layer.borderColor = UIColor.black.cgColor
-           groupImage.layer.cornerRadius = groupImage.frame.height/2 //This will change with corners of image and height/2 will make this circle shape
-           groupImage.clipsToBounds = true
+        // friendImage.layer.borderWidth = 1
+        groupImage.layer.masksToBounds = false
+        //friendImage.layer.borderColor = UIColor.black.cgColor
+        groupImage.layer.cornerRadius = groupImage.frame.height/2 //This will change with corners of image and height/2 will make this circle shape
+        groupImage.clipsToBounds = true
+        
+        groupImage.layer.shadowRadius = groupImage.frame.height/2
+        groupImage.layer.shadowColor = UIColor.black.cgColor
+        groupImage.layer.shadowOpacity = 0.6
+        groupImage.layer.shadowOffset = .zero
+        groupImage.layer.shadowPath = UIBezierPath(rect: groupImage.bounds).cgPath
+        groupImage.layer.shouldRasterize = true
        }
 }

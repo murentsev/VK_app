@@ -21,7 +21,7 @@ class FriendsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+
        
     }
 
@@ -38,9 +38,9 @@ class FriendsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FriendsTableViewCell
 
         cell.friendName.text = friends[indexPath.row].name
-        cell.friendImage.image = UIImage(named: friends[indexPath.row].image)
+        cell.avatarView.avatarImage = UIImage(named: friends[indexPath.row].image)
         cell.friendCity.text = friends[indexPath.row].city
-        cell.makeRounded()
+      //  cell.makeRounded()
         
         return cell
     }
