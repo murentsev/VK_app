@@ -1,5 +1,5 @@
 //
-//  FriendsTableViewController.swift
+//  GroupsTableViewController.swift
 //  VK_app
 //
 //  Created by Алексей Муренцев on 24.06.2020.
@@ -8,48 +8,50 @@
 
 import UIKit
 
-class FriendsTableViewController: UITableViewController {
+class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
 
-   
+    @IBAction func addGroup(segue: UIStoryboardSegue) {
+        guard
+            let globalGroupsController = segue.source as? GlobalGroupsTableViewController,
+            let indexPath = globalGroupsController.tableView.indexPathForSelectedRow
+            else { return }
+        let group = globalGroupsController.globalGroups[indexPath.row]
+        guard !groups.contains(group) else { return }
+        groups.append(group)
+        //        globalGroupsController.globalGroups.remove(at: indexPath.row)
+        //        globalGroupsController.tableView.deleteRows(at: [indexPath], with: .none)
+        tableView.reloadData()
+    }
     
-    var friends: [User] = [
-        User(name: "Alexey Murentsev", image: "Alexey Murentsev", city: "Voronezh", images: ["Alexey1", "Alexey2", "Alexey3"]),
-        User(name: "Dmitriy Matushkin", image: "Dmitriy Matushkin", city: "Voronezh", images: ["Dmitriy1", "Dmitriy2", "Dmitriy3"]),
-        User(name: "Denis Filimonov", image: "Denis Filimonov", city: "Voronezh", images: ["Denis1", "Denis2", "Denis3"])
-    ]
+    var filteredGroups: [Group] = []
+    
+    var groups: [Group] = [
+           Group(name: "Typical Voronezh", image: "Typical Voronezh")
+       ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
-       
+        tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
+        filteredGroups = groups
     }
 
     // MARK: - Table view data source
 
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return friends.count
+        return groups.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FriendsTableViewCell
-
-        cell.friendName.text = friends[indexPath.row].name
-        cell.avatarView.avatarImage = UIImage(named: friends[indexPath.row].image)
-        cell.friendCity.text = friends[indexPath.row].city
-      //  cell.makeRounded()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GroupsTableViewCell
+        
+        cell.groupName.text = filteredGroups[indexPath.row].name
+        cell.groupImage.image = UIImage(named: filteredGroups[indexPath.row].image)
+        cell.makeRounded()
         
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? PhotoCollectionViewController {
-            controller.photos = friends[tableView.indexPathForSelectedRow!.row].images
-        }
-    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -59,17 +61,28 @@ class FriendsTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            groups.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredGroups = groups
+        if !searchText.isEmpty {
+            filteredGroups = groups.filter({ $0.name.contains(searchText) })
+        }
+        tableView.reloadData()
+    }
 
     /*
     // Override to support rearranging the table view.

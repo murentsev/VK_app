@@ -1,5 +1,5 @@
 //
-//  GroupsTableViewController.swift
+//  GlobalGroupsTableViewController.swift
 //  VK_app
 //
 //  Created by Алексей Муренцев on 24.06.2020.
@@ -8,48 +8,53 @@
 
 import UIKit
 
-class GroupsTableViewController: UITableViewController {
-
-    @IBAction func addGroup(segue: UIStoryboardSegue) {
-        guard
-            let globalGroupsController = segue.source as? GlobalGroupsTableViewController,
-            let indexPath = globalGroupsController.tableView.indexPathForSelectedRow
-        else { return }
-        let group = globalGroupsController.globalGroups[indexPath.row]
-        guard !groups.contains(group) else { return }
-        groups.append(group)
-//        globalGroupsController.globalGroups.remove(at: indexPath.row)
-//        globalGroupsController.tableView.deleteRows(at: [indexPath], with: .none)
-        tableView.reloadData()
-    }
+class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegate {
     
-    var groups: [Group] = [
-           Group(name: "Typical Voronezh", image: "Typical Voronezh")
-       ]
+    var filteredGlobalGroups: [Group] = []
+    
+    var globalGroups: [Group] = [
+        Group(name: "MDK", image: "MDK"),
+        Group(name: "Satira bez pozitiva", image: "Satira bez pozitiva")
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
+        filteredGlobalGroups = globalGroups
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        // #warning Incomplete implementation, return the number of rows
+        return globalGroups.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GroupsTableViewCell
-        
-        cell.groupName.text = groups[indexPath.row].name
-        cell.groupImage.image = UIImage(named: groups[indexPath.row].image)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GlobalGroupsTableViewCell
+
+        cell.globalGroupImage.image = UIImage(named: filteredGlobalGroups[indexPath.row].image)
+        cell.globalGroupName.text = filteredGlobalGroups[indexPath.row].name
         cell.makeRounded()
         
         return cell
     }
     
 
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+          UIView.animate(withDuration: 0.3) {
+              self.view.layoutIfNeeded()
+          }
+      }
+      
+      func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+          filteredGlobalGroups = globalGroups
+          if !searchText.isEmpty {
+              filteredGlobalGroups = globalGroups.filter({ $0.name.contains(searchText) })
+          }
+          tableView.reloadData()
+      }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -58,15 +63,17 @@ class GroupsTableViewController: UITableViewController {
     }
     */
 
-    
+    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            groups.remove(at: indexPath.row)
+            // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
-        }
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
     }
-    
+    */
 
     /*
     // Override to support rearranging the table view.
