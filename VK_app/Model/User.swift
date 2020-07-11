@@ -6,7 +6,7 @@
 //  Copyright © 2020 Алексей Муренцев. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class User {
     
@@ -14,16 +14,16 @@ class User {
    // var password: String
     
     var name: String
-    var image: String
+    var image: UIImage
     var city: String
-    var images: [String]
+    var images: [UIImage]
  //   var userGroups: [Group]?
     
     init(
         name: String,
-        image: String,
+        image: UIImage,
         city: String,
-        images: [String]
+        images: [UIImage]
         //,userGroups: [Group]
     ) {
         self.name = name
@@ -33,4 +33,16 @@ class User {
        // self.userGroups = userGroups
     }
     
+    static var fakePhotoArray: [UIImage] = (1...10).map {_ in
+        Lorem.avatar
+    }
+    
+    static var fake: [User] = (1...56).map {_ in
+        User(
+            name: Lorem.fullName,
+            image: Lorem.avatar,
+            city: Lorem.word,
+            images: User.fakePhotoArray
+            )
+      }
 }

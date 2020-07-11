@@ -6,7 +6,7 @@
 //  Copyright © 2020 Алексей Муренцев. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Group: Equatable {
     static func == (lhs: Group, rhs: Group) -> Bool {
@@ -14,10 +14,14 @@ class Group: Equatable {
     }
     
     var name: String
-    var image: String
+    var image: UIImage
     
-    init(name: String, image: String) {
+    init(name: String, image: UIImage) {
         self.name = name
         self.image = image
+    }
+    
+    static var fake: [Group] = (1...23).map {_ in
+        Group(name: Lorem.words(2), image: Lorem.avatar)
     }
 }
