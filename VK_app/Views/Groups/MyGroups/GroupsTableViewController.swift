@@ -24,10 +24,11 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     var filteredGroups: [Group] = []
-    
-    var groups: [Group] = [
-           Group(name: "Typical Voronezh", image: "Typical Voronezh")
-       ]
+
+    var groups = Group.fake
+//    var groups: [Group] = [
+//           Group(name: "Typical Voronezh", image: "Typical Voronezh")
+//       ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,7 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        return filteredGroups.count
     }
 
     
@@ -46,7 +47,7 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GroupsTableViewCell
         
         cell.groupName.text = filteredGroups[indexPath.row].name
-        cell.groupImage.image = UIImage(named: filteredGroups[indexPath.row].image)
+        cell.groupImage.image = filteredGroups[indexPath.row].image
         cell.makeRounded()
         
         return cell

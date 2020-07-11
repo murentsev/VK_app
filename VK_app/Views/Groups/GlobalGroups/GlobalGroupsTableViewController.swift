@@ -12,10 +12,11 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
     
     var filteredGlobalGroups: [Group] = []
     
-    var globalGroups: [Group] = [
-        Group(name: "MDK", image: "MDK"),
-        Group(name: "Satira bez pozitiva", image: "Satira bez pozitiva")
-    ]
+    var globalGroups = Group.fake
+//    var globalGroups: [Group] = [
+//        Group(name: "MDK", image: "MDK"),
+//        Group(name: "Satira bez pozitiva", image: "Satira bez pozitiva")
+//    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +28,14 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return globalGroups.count
+        return filteredGlobalGroups.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GlobalGroupsTableViewCell
 
-        cell.globalGroupImage.image = UIImage(named: filteredGlobalGroups[indexPath.row].image)
+        cell.globalGroupImage.image = filteredGlobalGroups[indexPath.row].image
         cell.globalGroupName.text = filteredGlobalGroups[indexPath.row].name
         cell.makeRounded()
         

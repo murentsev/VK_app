@@ -36,11 +36,11 @@ class AvatarView: UIView {
     }
     
     lazy var shadowView: UIView = {
-           let view = UIView()
-           view.clipsToBounds = false
+        let view = UIView()
+        view.clipsToBounds = false
         view.backgroundColor = .black
-           return view
-       }()
+        return view
+    }()
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()

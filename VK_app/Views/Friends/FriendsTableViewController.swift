@@ -12,12 +12,7 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
 
    
     var filteredFriends: [User] = []
-    
-    var friends: [User] = [
-        User(name: "Alexey Murentsev", image: "Alexey Murentsev", city: "Voronezh", images: ["Alexey1", "Alexey2", "Alexey3"]),
-        User(name: "Dmitriy Matushkin", image: "Dmitriy Matushkin", city: "Voronezh", images: ["Dmitriy1", "Dmitriy2", "Dmitriy3"]),
-        User(name: "Denis Filimonov", image: "Denis Filimonov", city: "Voronezh", images: ["Denis1", "Denis2", "Denis3"])
-    ]
+    var friends = User.fake
     
     var sections: [String] = []
     
@@ -51,7 +46,7 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FriendsTableViewCell
       //  cell.textLabel?.text = itemsInSection(indexPath.section)[indexPath.row].name
         cell.friendName.text = itemsInSection(indexPath.section)[indexPath.row].name
-        cell.avatarView.avatarImage = UIImage(named: itemsInSection(indexPath.section)[indexPath.row].image)
+        cell.avatarView.avatarImage = itemsInSection(indexPath.section)[indexPath.row].image
         cell.friendCity.text = itemsInSection(indexPath.section)[indexPath.row].city
         
       //  cell.makeRounded()
@@ -66,6 +61,9 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if itemsInSection(section).isEmpty {
+            return nil
+        }
         return sections[section]
     }
    
