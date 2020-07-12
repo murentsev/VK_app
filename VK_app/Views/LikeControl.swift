@@ -182,6 +182,15 @@ import UIKit
     // MARK: - Actions
     @objc func likeButtonTapped(_ sender: UIButton) {
         isLiked.toggle()
+        UIView.animate(withDuration: 0.15, delay: 0, options: [], animations: {
+            if self.isLiked {
+                self.likeButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+            } else {
+                self.likeButton.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+            }
+        }, completion: {_ in
+            self.likeButton.transform = .identity
+        })
     }
 
     @objc func commentButtonTapped(_ sender: UIButton) {
