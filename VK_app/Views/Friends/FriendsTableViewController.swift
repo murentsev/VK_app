@@ -18,6 +18,7 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         friends = friends.sorted(by: {$0.name < $1.name})
         sections = Array(Set(friends.map ({ $0.name.prefix(1).uppercased() }))).sorted()
         filteredFriends = friends

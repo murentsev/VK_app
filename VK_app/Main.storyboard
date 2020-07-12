@@ -91,7 +91,7 @@
                                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" title="Signin"/>
                                                                 <connections>
-                                                                    <segue destination="iyw-iU-g8s" kind="show" identifier="Home" id="X9R-bR-mhB"/>
+                                                                    <action selector="loading:" destination="BYZ-38-t0r" eventType="touchUpInside" id="c0k-d2-0mO"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -149,7 +149,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yqa-8C-aKB">
             <objects>
-                <tabBarController modalPresentationStyle="fullScreen" id="iyw-iU-g8s" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="main" modalPresentationStyle="fullScreen" id="iyw-iU-g8s" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="hPT-Kj-5H6"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tXx-xJ-I9i">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -174,9 +174,9 @@
         <!--Друзья-->
         <scene sceneID="Obe-5z-NGS">
             <objects>
-                <tableViewController id="JMG-Pt-A93" customClass="FriendsTableViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="s4j-mQ-nUz">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                <tableViewController storyboardIdentifier="friends" id="JMG-Pt-A93" customClass="FriendsTableViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="52" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="s4j-mQ-nUz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="Tzn-zw-gh2">
@@ -189,14 +189,14 @@
                         </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="QWi-Ab-bko" customClass="FriendsTableViewCell" customModule="VK_app" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="52"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QWi-Ab-bko" id="Ms9-86-czV">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="qzM-QC-VhP">
-                                            <rect key="frame" x="63" y="7.3333333333333321" width="40.333333333333343" height="35.333333333333343"/>
+                                            <rect key="frame" x="63" y="8.3333333333333321" width="40.333333333333343" height="35.333333333333343"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDg-45-psB">
                                                     <rect key="frame" x="0.0" y="0.0" width="40.333333333333336" height="18"/>
@@ -213,7 +213,7 @@
                                             </subviews>
                                         </stackView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fM4-S0-ogX" customClass="AvatarView" customModule="VK_app" customModuleProvider="target">
-                                            <rect key="frame" x="10" y="3.6666666666666679" width="43" height="43"/>
+                                            <rect key="frame" x="10" y="4.6666666666666679" width="43" height="43"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="43" id="bq7-mG-RCc"/>
@@ -263,7 +263,7 @@
             <objects>
                 <collectionViewController id="cUf-1I-Xk4" customClass="PhotoCollectionViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="xfx-7L-FBc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="P1H-0d-yS0">
@@ -313,7 +313,7 @@
             <objects>
                 <tableViewController id="Jxe-g6-agm" customClass="GroupsTableViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="sPN-YB-gnQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="MgW-eD-piw">
@@ -383,8 +383,8 @@
         <scene sceneID="2zN-aE-D4o">
             <objects>
                 <tableViewController id="zPf-Me-ZEJ" customClass="NewsTableViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Pjp-ZE-ISc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Pjp-ZE-ISc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <connections>
@@ -403,7 +403,7 @@
             <objects>
                 <tableViewController id="r7w-ac-cws" customClass="GlobalGroupsTableViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="EGe-GP-6hM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="bvr-YX-7Xh">
@@ -472,7 +472,7 @@
                     <tabBarItem key="tabBarItem" title="Друзья" image="person.2.fill" catalog="system" id="lkz-XS-hU3"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YTO-x1-Xfd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -491,7 +491,7 @@
                     <tabBarItem key="tabBarItem" title="Группы" image="list.dash" catalog="system" id="yLP-NJ-3jc"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YMx-1e-B16">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -511,7 +511,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="BZf-IW-Zte"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tbX-So-WR2">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
