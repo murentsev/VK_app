@@ -102,6 +102,7 @@ import UIKit
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
+        stackView.alignment = .leading
         stackView.spacing = 5
         return stackView
     }()

@@ -54,17 +54,46 @@ class ViewController: UIViewController {
     }
     
   
+    @IBAction func loading(_ sender: Any) {
+        
+        
+        let isValid = checkUserData()
+        if !isValid {
+            showErrorAlert()
+        } else {
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+            view.addSubview(backgroundView)
+            backgroundView.frame = view.bounds
+            
+            let loadingView = LoadingView()
+            backgroundView.addSubview(loadingView)
+            loadingView.center = view.center
+            loadingView.startAnimation()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                backgroundView.removeFromSuperview()
+                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let tabBarViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                tabBarViewController.modalPresentationStyle = .fullScreen
+                self.present(tabBarViewController, animated: true, completion: nil)
+            }
+            
+            
+            
+        }
+    }
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-          if identifier == "Home" {
-             let isValid = checkUserData()
-              if !isValid {
-                  showErrorAlert()
-              }
-              return isValid
-          }
-          return true
-      }
+//    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+//          if identifier == "Home" {
+//             let isValid = checkUserData()
+//              if !isValid {
+//                  showErrorAlert()
+//              }
+//              return isValid
+//          }
+//          return true
+//      }
       
       func checkUserData() -> Bool {
           return loginTextField.text == "admin" &&
