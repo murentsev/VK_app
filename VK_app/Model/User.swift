@@ -33,7 +33,7 @@ class User {
        // self.userGroups = userGroups
     }
     
-    static var fakePhotoArray: [UIImage] = (1...10).map {_ in
+    static var fakePhotoArray: [UIImage] = (1...50).map {_ in
         Lorem.avatar
     }
     
