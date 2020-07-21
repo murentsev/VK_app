@@ -11,6 +11,7 @@ import UIKit
 class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
 
    
+    @IBOutlet weak var Search: SearchView!
     var filteredFriends: [User] = []
     var friends = User.fake
     
@@ -72,11 +73,11 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
         return sections
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        UIView.animate(withDuration: 0.3) {
+//            self.view.layoutIfNeeded()
+//        }
+//    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredFriends = friends
@@ -85,6 +86,8 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
         }
         tableView.reloadData()
     }
+    
+    
    
 }
 

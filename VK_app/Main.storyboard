@@ -179,8 +179,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="Tzn-zw-gh2">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="iT2-la-XDj" customClass="SearchView" customModule="VK_app" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        </view>
+                        <searchBar key="tableFooterView" contentMode="redraw" id="Tzn-zw-gh2">
+                            <rect key="frame" x="0.0" y="152" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -253,6 +258,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Друзья" id="R7f-MT-7mp"/>
+                    <connections>
+                        <outlet property="Search" destination="iT2-la-XDj" id="y2m-XL-8bI"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T2p-qu-Z3I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -55,5 +55,21 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     return CGSize(width: collectionView.bounds.width / 3,
                         height: collectionView.bounds.width / 3)
       }
-
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.alpha = 0
+        cell.layer.transform = CATransform3DMakeScale(0.5, 0.5, 0.5)
+        UIView.animate(withDuration: 0.5) {
+            cell.alpha = 1
+            cell.layer.transform = CATransform3DMakeScale(1, 1, 1)
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.3) {
+            print(#function)
+            cell.alpha = 0
+            cell.layer.transform = CATransform3DMakeScale(0.5, 0.5, 0.5)
+        }
+    }
 }
