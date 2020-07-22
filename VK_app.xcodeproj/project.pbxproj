@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2201FD824C75369008AB81A /* FullScreenPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2201FD724C75369008AB81A /* FullScreenPhotoViewController.swift */; };
 		B252495124972514004E3DDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B252495024972514004E3DDD /* Assets.xcassets */; };
 		B252495424972514004E3DDD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B252495224972514004E3DDD /* LaunchScreen.storyboard */; };
 		B252495E2497256F004E3DDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B252495D2497256F004E3DDD /* ViewController.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B2201FD724C75369008AB81A /* FullScreenPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPhotoViewController.swift; sourceTree = "<group>"; };
 		B252494424972513004E3DDD /* VK_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VK_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B252495024972514004E3DDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B252495324972514004E3DDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			children = (
 				B2B9EFE424A3757C0013305F /* PhotoCollectionViewController.swift */,
 				B2B9EFE624A375920013305F /* PhotoCollectionViewCell.swift */,
+				B2201FD724C75369008AB81A /* FullScreenPhotoViewController.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				B25CC3D624B421030015A2FB /* NewsTableViewController.swift in Sources */,
 				B29A3B2724B9E46C001FCBC5 /* LoadingView.swift in Sources */,
 				B2B9EFD924A330350013305F /* User.swift in Sources */,
+				B2201FD824C75369008AB81A /* FullScreenPhotoViewController.swift in Sources */,
 				B2B9EFE124A3735B0013305F /* GlobalGroupsTableViewCell.swift in Sources */,
 				B2B9EFD724A32D990013305F /* FriendsTableViewCell.swift in Sources */,
 				B2B9EFE524A3757C0013305F /* PhotoCollectionViewController.swift in Sources */,

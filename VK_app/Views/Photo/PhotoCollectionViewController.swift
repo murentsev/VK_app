@@ -72,4 +72,13 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
             cell.layer.transform = CATransform3DMakeScale(0.5, 0.5, 0.5)
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+           guard segue.identifier == "fullScreeen" else { return }
+           guard let destination = segue.destination as? FullScreenPhotoViewController else { return }
+        destination.photos = photos
+        let index = self.collectionView.indexPathsForSelectedItems!
+        destination.index = index[0].row
+           
+       }
 }

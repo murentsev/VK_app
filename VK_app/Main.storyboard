@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -302,6 +302,7 @@
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="photo" destination="H34-DN-oYc" id="ABN-WA-UZy"/>
+                                    <segue destination="vkW-mf-YSQ" kind="show" identifier="fullScreeen" id="i5P-k6-Bdn"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -315,6 +316,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="unr-QZ-l3T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3734" y="-265"/>
+        </scene>
+        <!--Full Screen Photo View Controller-->
+        <scene sceneID="3PH-wq-NM9">
+            <objects>
+                <viewController id="vkW-mf-YSQ" customClass="FullScreenPhotoViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="p0J-qR-0vp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mKL-XN-XLE">
+                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="mKL-XN-XLE" firstAttribute="trailing" secondItem="HHM-eN-VHe" secondAttribute="trailing" id="HBT-CQ-Tjb"/>
+                            <constraint firstItem="mKL-XN-XLE" firstAttribute="top" secondItem="HHM-eN-VHe" secondAttribute="top" id="a9b-tm-MA7"/>
+                            <constraint firstItem="mKL-XN-XLE" firstAttribute="leading" secondItem="HHM-eN-VHe" secondAttribute="leading" id="akl-pO-n2D"/>
+                            <constraint firstItem="mKL-XN-XLE" firstAttribute="bottom" secondItem="HHM-eN-VHe" secondAttribute="bottom" id="qmy-eF-ePa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HHM-eN-VHe"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="OOD-G2-qyn"/>
+                    <connections>
+                        <outlet property="currentPhoto" destination="mKL-XN-XLE" id="17x-yS-yBh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xbr-jR-q1n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4616.8000000000002" y="-265.27093596059115"/>
         </scene>
         <!--Группы-->
         <scene sceneID="7Qa-KS-Sb8">
