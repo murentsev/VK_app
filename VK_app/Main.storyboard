@@ -302,7 +302,7 @@
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="photo" destination="H34-DN-oYc" id="ABN-WA-UZy"/>
-                                    <segue destination="vkW-mf-YSQ" kind="show" identifier="fullScreeen" id="i5P-k6-Bdn"/>
+                                    <segue destination="vkW-mf-YSQ" kind="presentation" identifier="fullScreeen1" id="i5P-k6-Bdn"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -320,16 +320,17 @@
         <!--Full Screen Photo View Controller-->
         <scene sceneID="3PH-wq-NM9">
             <objects>
-                <viewController id="vkW-mf-YSQ" customClass="FullScreenPhotoViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="vkW-mf-YSQ" customClass="FullScreenPhotoViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="p0J-qR-0vp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mKL-XN-XLE">
-                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="mKL-XN-XLE" firstAttribute="trailing" secondItem="HHM-eN-VHe" secondAttribute="trailing" id="HBT-CQ-Tjb"/>
                             <constraint firstItem="mKL-XN-XLE" firstAttribute="top" secondItem="HHM-eN-VHe" secondAttribute="top" id="a9b-tm-MA7"/>

@@ -12,7 +12,7 @@ private let reuseIdentifier = "Cell"
 
 class PhotoCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-   
+    let transitionController = TransitionController()
     
     var photos: [UIImage] = []
     
@@ -74,11 +74,16 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-           guard segue.identifier == "fullScreeen" else { return }
-           guard let destination = segue.destination as? FullScreenPhotoViewController else { return }
+           guard //segue.identifier == "fullScreeen",
+                let destination = segue.destination as? FullScreenPhotoViewController,
+                let indexPath = self.collectionView.indexPathsForSelectedItems?.first,
+                let cell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell
+            else { return }
+                
         destination.photos = photos
-        let index = self.collectionView.indexPathsForSelectedItems!
-        destination.index = index[0].row
+        destination.index = indexPath.row
+        destination.transitioningDelegate = transitionController
+        transitionController.startView = cell.photo
            
        }
 }
