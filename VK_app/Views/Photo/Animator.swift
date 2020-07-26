@@ -65,6 +65,7 @@ class Animator: NSObject, UIViewControllerAnimatedTransitioning {
         let yScaleFactor = originFrame.height / finalFrame.height
         
         toView.transform = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
+        //toView.transform = CGAffineTransform(rotationAngle: 90.0)
         toView.center = originFrame.center
         
         containerView.addSubview(toView)
