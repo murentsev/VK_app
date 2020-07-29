@@ -79,14 +79,14 @@ class VKAuthViewController: UIViewController, WKNavigationDelegate {
         getData(token: token, method: vkMethods.friends)
         getData(token: token, method: vkMethods.photos)
         getData(token: token, method: vkMethods.groups)
-        getData(token: token, method: vkMethods.groupSearch)
+        getData(token: token, method: vkMethods.groupSearch, groupSearch: "Типичный воронеж")
         
         decisionHandler(.allow)
     }
     
     
     
-    func getData(token: String, method: vkMethods) {
+    func getData(token: String, method: vkMethods, groupSearch: String = "") {
         
         var vkm = ""
         
@@ -107,7 +107,7 @@ class VKAuthViewController: UIViewController, WKNavigationDelegate {
             "v": "5.120"
         ]
         if method == .groupSearch {
-            parameters["q"] = "Типичный воронеж" //значение строки поиска
+            parameters["q"] = groupSearch //значение строки поиска
         }
         AF.request(urlPath, parameters: parameters).responseJSON { (response) in
             print(response.value ?? "No json")
