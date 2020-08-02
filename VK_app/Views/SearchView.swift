@@ -10,6 +10,8 @@ import UIKit
 
 class SearchView: UIView, UITextFieldDelegate {
     
+    weak var delegate: searchViewDelegate?
+    
     lazy var textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -19,6 +21,7 @@ class SearchView: UIView, UITextFieldDelegate {
         
         return textField
     }()
+    
     
     lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
@@ -107,6 +110,7 @@ class SearchView: UIView, UITextFieldDelegate {
                textFieldLeftConstraint.constant = 10
                cancelButtonLeftConstraint.constant = 0
         self.textField.text = ""
+        delegate?.clearSearchFriends()
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [], animations: {
             self.textField.resignFirstResponder()
             self.textField.attributedPlaceholder = NSAttributedString(
@@ -118,15 +122,19 @@ class SearchView: UIView, UITextFieldDelegate {
         })
     }
     
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        //var a = 1
-//
-////        filteredFriends = super.friends
-////            if !searchText.isEmpty {
-////                filteredFriends = friends.filter({ $0.name.contains(searchText) })
-////            }
-////            tableView.reloadData()
-////        }
-////        return true
-//   }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let text = textField.text,
+            let textRange = Range(range, in: text) {
+            let updatedText = text.replacingCharacters(in: textRange,
+                                                       with: string)
+            delegate?.searchFriends(searchText: updatedText)
+          //  myvalidator(text: updatedText)
+        }
+        return true
+    }
+}
+
+protocol searchViewDelegate: class {
+    func searchFriends(searchText: String)
+    func clearSearchFriends()
 }

@@ -9,11 +9,10 @@
 import UIKit
 import Kingfisher
 
-class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
-
+class FriendsTableViewController: UITableViewController, UISearchBarDelegate, searchViewDelegate {
+ 
     lazy var service = VKService()
     
-   
     @IBOutlet weak var Search: SearchView!
     var filteredFriends: [VKUser] = []
     var friends: [VKUser] = []
@@ -22,18 +21,14 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
+        Search.delegate = self
         service.getData(.friends) {[weak self] friendsAnyArr in
             let friendsArr = friendsAnyArr as! [VKUser]
-           // self?.friends = friendsArr.sorted(by: {$0.name < $1.name})
+            self?.friends = friendsArr.sorted(by: {$0.name < $1.name})
             self?.tableView.setContentOffset(CGPoint.init(x: 0, y: -20), animated: false)
             self?.filteredFriends = friendsArr.sorted(by: {$0.name < $1.name})
             self?.sections = Array(Set((self?.filteredFriends.map ({ $0.name.prefix(1).uppercased() }))!)).sorted()
             self?.tableView.reloadData()
-            
         }
     }
 
@@ -104,6 +99,20 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
         }
         tableView.reloadData()
     }
+    
+    func searchFriends(searchText: String) {
+        filteredFriends = friends
+        if !searchText.isEmpty {
+            filteredFriends = filteredFriends.filter({ $0.name.contains(searchText) })
+        }
+        tableView.reloadData()
+    }
+    
+    func clearSearchFriends() {
+        filteredFriends = friends
+        tableView.reloadData()
+    }
+    
     
     
    
