@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegate {
     
-    var filteredGlobalGroups: [Group] = []
+    var service = VKService()
     
-    var globalGroups = Group.fake
+    var filteredGlobalGroups: [VKGroup] = []
+    
+    var globalGroups: [VKGroup] = []
 //    var globalGroups: [Group] = [
 //        Group(name: "MDK", image: "MDK"),
 //        Group(name: "Satira bez pozitiva", image: "Satira bez pozitiva")
@@ -20,7 +23,13 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
+        service.getData(.groupSearch) {[weak self] groupsAnyArr in
+                   let groupsArr = groupsAnyArr as! [VKGroup]
+                   self?.globalGroups = groupsArr
+                   self?.filteredGlobalGroups = groupsArr
+                   self?.tableView.reloadData()
+               }
+        //tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
         filteredGlobalGroups = globalGroups
     }
 
@@ -34,8 +43,12 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GlobalGroupsTableViewCell
-
-        cell.globalGroupImage.image = filteredGlobalGroups[indexPath.row].image
+        if let imgUrl = URL(string: filteredGlobalGroups[indexPath.row].photo_200) {
+            let imgResource = ImageResource(downloadURL: imgUrl)
+            cell.globalGroupImage.kf.setImage(with: imgResource)
+            cell.globalGroupImage.contentMode = .scaleAspectFill
+        }
+        //cell.globalGroupImage.image = filteredGlobalGroups[indexPath.row].image
         cell.globalGroupName.text = filteredGlobalGroups[indexPath.row].name
         cell.makeRounded()
         
@@ -52,9 +65,15 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
       func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
           filteredGlobalGroups = globalGroups
           if !searchText.isEmpty {
-              filteredGlobalGroups = globalGroups.filter({ $0.name.contains(searchText) })
+            service.getData(.groupSearch, groupSearch: searchText) {[weak self] groupsAnyArr in
+                let groupsArr = groupsAnyArr as! [VKGroup]
+                self?.globalGroups = groupsArr
+                self?.filteredGlobalGroups = groupsArr
+                self?.tableView.reloadData()
+            }
+              //filteredGlobalGroups = globalGroups.filter({ $0.name.contains(searchText) })
           }
-          tableView.reloadData()
+          //tableView.reloadData()
       }
     /*
     // Override to support conditional editing of the table view.

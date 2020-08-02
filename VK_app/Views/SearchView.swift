@@ -106,6 +106,7 @@ class SearchView: UIView, UITextFieldDelegate {
         iconCenterXConstraint.constant = 0
                textFieldLeftConstraint.constant = 10
                cancelButtonLeftConstraint.constant = 0
+        self.textField.text = ""
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [], animations: {
             self.textField.resignFirstResponder()
             self.textField.attributedPlaceholder = NSAttributedString(
@@ -116,4 +117,16 @@ class SearchView: UIView, UITextFieldDelegate {
             
         })
     }
+    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        //var a = 1
+//
+////        filteredFriends = super.friends
+////            if !searchText.isEmpty {
+////                filteredFriends = friends.filter({ $0.name.contains(searchText) })
+////            }
+////            tableView.reloadData()
+////        }
+////        return true
+//   }
 }

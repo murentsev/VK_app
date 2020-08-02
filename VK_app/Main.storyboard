@@ -36,11 +36,12 @@
                     </view>
                     <connections>
                         <outlet property="webView" destination="dcz-KQ-mrl" id="vVh-yZ-6Ib"/>
+                        <segue destination="iyw-iU-g8s" kind="presentation" identifier="Home" id="CJK-25-SQJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H4L-y3-DUW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-134" y="-630"/>
+            <point key="canvasLocation" x="-42" y="122"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -178,7 +179,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="122.54464285714285"/>
+            <point key="canvasLocation" x="-266" y="-698"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="yqa-8C-aKB">
@@ -304,7 +305,7 @@
         <scene sceneID="nuI-Du-ohd">
             <objects>
                 <collectionViewController id="cUf-1I-Xk4" customClass="PhotoCollectionViewController" customModule="VK_app" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="xfx-7L-FBc">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" dataMode="prototypes" id="xfx-7L-FBc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
