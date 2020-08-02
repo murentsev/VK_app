@@ -7,30 +7,29 @@
 //
 
 import UIKit
+import Kingfisher
 
 private let reuseIdentifier = "Cell"
 
 class PhotoCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
+    
+    lazy var service = VKService()
+    
     let transitionController = TransitionController()
     
-    var photos: [UIImage] = []
+    var photos: [VKPhoto] = []
+    var id: Int = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-       
+        
+        service.getData(.photos, id: id) {[weak self] photosAnyArr in
+            let photosArr = photosAnyArr as! [VKPhoto]
+            self?.photos = photosArr
+            self?.collectionView.reloadData()
+        }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -47,7 +46,12 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoCollectionViewCell
-        cell.photo.image = photos[indexPath.row]
+        
+        if let imgUrl = URL(string: photos[indexPath.row].sizes.last?.url ?? "") {
+            let imgResource = ImageResource(downloadURL: imgUrl)
+            cell.photo.kf.setImage(with: imgResource)
+            cell.photo.contentMode = .scaleAspectFill
+        }
         return cell
     }
 

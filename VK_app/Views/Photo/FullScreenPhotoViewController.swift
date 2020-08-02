@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FullScreenPhotoViewController: UIViewController {
     
-    var photos: [UIImage] = []
+    var photos: [VKPhoto] = []
     var photo: UIImage? = nil
     var index = 0
     var currentDirection: Direction? = nil
@@ -39,7 +40,13 @@ class FullScreenPhotoViewController: UIViewController {
         super.viewDidLoad()
         nextPhoto.contentMode = .scaleAspectFit
         transitionController?.endView = currentPhoto
-        currentPhoto.image = photos[index]
+        if let imgUrl = URL(string: photos[index].sizes.last?.url ?? "") {
+            let imgResource = ImageResource(downloadURL: imgUrl)
+            currentPhoto.kf.setImage(with: imgResource)
+            
+            // currentPhoto.contentMode = .scaleAspectFill
+        }
+        // currentPhoto.image = photos[index]
         let pan = UIPanGestureRecognizer(target: self, action: #selector(onPan))
         view.addGestureRecognizer(pan)
     }
@@ -98,7 +105,13 @@ class FullScreenPhotoViewController: UIViewController {
                 
                 if canSlide(direction) {
                     let nextIndex = direction == .left ? index + 1 : index - 1
-                    nextPhoto.image = photos[nextIndex]
+                    if let imgUrl = URL(string: photos[nextIndex].sizes.last?.url ?? "") {
+                        let imgResource = ImageResource(downloadURL: imgUrl)
+                        nextPhoto.kf.setImage(with: imgResource)
+                        
+                        // nextPhoto.contentMode = .scaleAspectFill
+                    }
+                    //nextPhoto.image = photos[nextIndex]
                     view.addSubview(nextPhoto)
                     let offsetX = direction == .left ? view.bounds.width : -view.bounds.width
                     nextPhoto.frame = view.bounds.offsetBy(dx: offsetX, dy: 0)
@@ -114,7 +127,13 @@ class FullScreenPhotoViewController: UIViewController {
                     self.index = direction == .left ? self.index + 1 : self.index - 1
                     self.currentPhoto.alpha = 1
                     self.currentPhoto.transform = .identity
-                    self.currentPhoto.image = self.photos[self.index]
+                    if let imgUrl = URL(string: self.photos[self.index].sizes.last?.url ?? "") {
+                        let imgResource = ImageResource(downloadURL: imgUrl)
+                        self.currentPhoto.kf.setImage(with: imgResource)
+                        
+                        //self.currentPhoto.contentMode = .scaleAspectFill
+                    }
+                    // self.currentPhoto.image = self.photos[self.index]
                     self.nextPhoto.removeFromSuperview()
                 }
                 animator.pauseAnimation()

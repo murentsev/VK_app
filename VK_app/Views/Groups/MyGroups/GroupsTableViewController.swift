@@ -7,33 +7,38 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
 
+    lazy var service = VKService()
+    
     @IBAction func addGroup(segue: UIStoryboardSegue) {
-        guard
-            let globalGroupsController = segue.source as? GlobalGroupsTableViewController,
-            let indexPath = globalGroupsController.tableView.indexPathForSelectedRow
-            else { return }
-        let group = globalGroupsController.globalGroups[indexPath.row]
-        guard !groups.contains(group) else { return }
-        groups.append(group)
-        //        globalGroupsController.globalGroups.remove(at: indexPath.row)
-        //        globalGroupsController.tableView.deleteRows(at: [indexPath], with: .none)
-        tableView.reloadData()
+//        guard
+//            let globalGroupsController = segue.source as? GlobalGroupsTableViewController,
+//            let indexPath = globalGroupsController.tableView.indexPathForSelectedRow
+//            else { return }
+//        let group = globalGroupsController.globalGroups[indexPath.row]
+//        guard !groups.contains(group) else { return }
+//        groups.append(group)
+//        tableView.reloadData()
     }
     
-    var filteredGroups: [Group] = []
-
-    var groups = Group.fake
-//    var groups: [Group] = [
-//           Group(name: "Typical Voronezh", image: "Typical Voronezh")
-//       ]
+    var filteredGroups: [VKGroup] = []
+    var groups: [VKGroup] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
+        
+        service.getData(.groups) {[weak self] groupsAnyArr in
+            let groupsArr = groupsAnyArr as! [VKGroup]
+            self?.groups = groupsArr
+            self?.filteredGroups = groupsArr
+            self?.tableView.reloadData()
+        }
         tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
-        filteredGroups = groups
+        //filteredGroups = groups
     }
 
     // MARK: - Table view data source
@@ -47,23 +52,17 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GroupsTableViewCell
         
         cell.groupName.text = filteredGroups[indexPath.row].name
-        cell.groupImage.image = filteredGroups[indexPath.row].image
+        if let imgUrl = URL(string: filteredGroups[indexPath.row].photo_200) {
+                   let imgResource = ImageResource(downloadURL: imgUrl)
+                   cell.groupImage.kf.setImage(with: imgResource)
+                   cell.groupImage.contentMode = .scaleAspectFill
+               }
+       // cell.groupImage.image = filteredGroups[indexPath.row].image
         cell.makeRounded()
         
         return cell
     }
-    
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             groups.remove(at: indexPath.row)
@@ -84,30 +83,5 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
         }
         tableView.reloadData()
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

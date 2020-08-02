@@ -12,12 +12,7 @@ import Alamofire
 
 class VKAuthViewController: UIViewController, WKNavigationDelegate {
     
-    enum vkMethods {
-        case friends
-        case photos
-        case groups
-        case groupSearch
-    }
+ 
     
     @IBOutlet weak var webView: WKWebView! {
         didSet {
@@ -72,46 +67,21 @@ class VKAuthViewController: UIViewController, WKNavigationDelegate {
                 return dict
         }
         
-        guard let token = params["access_token"] else {return}
-        print(token)
+        guard let token = params["access_token"] else { return }
+        
         Session.instance.token = token
         
-        getData(token: token, method: vkMethods.friends)
-        getData(token: token, method: vkMethods.photos)
-        getData(token: token, method: vkMethods.groups)
-        getData(token: token, method: vkMethods.groupSearch)
+        performSegue(withIdentifier: "Home", sender: nil)
+//        getData(token: token, method: vkMethods.friends)
+//        getData(token: token, method: vkMethods.photos)
+//        getData(token: token, method: vkMethods.groups)
+//        getData(token: token, method: vkMethods.groupSearch, groupSearch: "Типичный воронеж")
         
-        decisionHandler(.allow)
+        decisionHandler(.cancel)
     }
     
     
     
-    func getData(token: String, method: vkMethods) {
-        
-        var vkm = ""
-        
-        switch method {
-        case .friends:
-            vkm = "friends.get"
-        case .photos:
-            vkm = "photos.getAll"
-        case .groups:
-            vkm = "groups.get"
-        case .groupSearch:
-            vkm = "groups.search"
-        }
-        
-        let urlPath = "https://api.vk.com/method/" + vkm
-        var parameters: Parameters = [
-            "access_token": token,
-            "v": "5.120"
-        ]
-        if method == .groupSearch {
-            parameters["q"] = "Типичный воронеж" //значение строки поиска
-        }
-        AF.request(urlPath, parameters: parameters).responseJSON { (response) in
-            print(response.value ?? "No json")
-        }
-    }
+   
     
 }
