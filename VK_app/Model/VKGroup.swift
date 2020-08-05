@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import RealmSwift
 
-class VKGroup: Decodable {
-    var id: Int
-    var name: String
-    var photo_200: String
+class VKGroup: Object, Decodable {
+    @objc dynamic var id: Int
+    @objc dynamic var name: String
+    @objc dynamic var photo_200: String
 }

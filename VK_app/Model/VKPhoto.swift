@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import RealmSwift
 
-class VKPhoto: Decodable {
-    var id: Int
+class VKPhoto: Object, Decodable {
+    @objc dynamic var id: Int
     var sizes: [PhotoSize]
 }
 
-struct PhotoSize: Decodable {
-    var type: String
-    var url: String
-    var width: Int
-    var height: Int
+class PhotoSize: Object, Decodable {
+    @objc dynamic var type: String
+    @objc dynamic var url: String
+    @objc dynamic var width: Int
+    @objc dynamic var height: Int
 }

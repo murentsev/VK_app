@@ -8,7 +8,7 @@
 
 import Foundation
 import Alamofire
-
+import RealmSwift
 
 class VKService {
 
@@ -37,11 +37,12 @@ class VKService {
         case .friends:
             vkm = "friends.get"
             parameters["fields"] = "city, online, photo_200_orig"
-            AF.request(urlPath, parameters: parameters).responseData { (response) in
+            AF.request(urlPath, parameters: parameters).responseData { [weak self] (response) in
                 print(response.value ?? "No json")
                 guard let data = response.value else { return }
                 do {
                     let items = try JSONDecoder().decode(VKUsersResponse.self, from: data).response?.items
+                    self?.saveFriends(items!)
                     completion(items!)
                 } catch {
                         print(error)
@@ -51,12 +52,13 @@ class VKService {
         case .photos:
             vkm = "photos.getAll"
             parameters["owner_id"] = id
-            AF.request(urlPath, parameters: parameters).responseData { (response) in
+            AF.request(urlPath, parameters: parameters).responseData { [weak self] (response) in
                 print(response.value ?? "No json")
                 guard let data = response.value else { return }
                 do {
                     guard let items = try JSONDecoder().decode(VKPhotoResponse.self, from: data).response?.items
                         else { return }
+                    self?.savePhotos(items)
                     completion(items)
                 } catch {
                         print(error)
@@ -66,12 +68,12 @@ class VKService {
         case .groups:
             vkm = "groups.get"
             parameters["extended"] = 1
-            AF.request(urlPath, parameters: parameters).responseData { (response) in
+            AF.request(urlPath, parameters: parameters).responseData { [weak self] (response) in
                 print(response.value ?? "No json")
                 guard let data = response.value else { return }
                 do {
                     let items = try JSONDecoder().decode(VKGroupsResponse.self, from: data).response?.items
-                   
+                    self?.saveGroups(items!)
                     completion(items!)
                 } catch {
                         print(error)
@@ -93,6 +95,39 @@ class VKService {
                     completion([])
                 }
             }
+        }
+    }
+    
+    func saveFriends(_ items: [VKUser]) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(items)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func saveGroups(_ items: [VKGroup]) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(items)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func savePhotos(_ items: [VKPhoto]) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(items)
+            }
+        } catch {
+            print(error)
         }
     }
 }

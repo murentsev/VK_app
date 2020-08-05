@@ -35,6 +35,8 @@
 		B28E7BB724D07E6D005F1E14 /* VKAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28E7BB624D07E6D005F1E14 /* VKAuthViewController.swift */; };
 		B29A3B2724B9E46C001FCBC5 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A3B2624B9E46C001FCBC5 /* LoadingView.swift */; };
 		B29A3B2924BB0120001FCBC5 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A3B2824BB0120001FCBC5 /* SearchView.swift */; };
+		B2B5FD4324D9067F0027F7B9 /* VKResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B5FD4224D9067F0027F7B9 /* VKResponse.swift */; };
+		B2B5FD4624D908870027F7B9 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B2B5FD4524D908870027F7B9 /* RealmSwift */; };
 		B2B9EFD424A32CA30013305F /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B9EFD324A32CA30013305F /* FriendsTableViewController.swift */; };
 		B2B9EFD724A32D990013305F /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B9EFD624A32D990013305F /* FriendsTableViewCell.swift */; };
 		B2B9EFD924A330350013305F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B9EFD824A330350013305F /* User.swift */; };
@@ -84,6 +86,7 @@
 		B28E7BB624D07E6D005F1E14 /* VKAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKAuthViewController.swift; sourceTree = "<group>"; };
 		B29A3B2624B9E46C001FCBC5 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		B29A3B2824BB0120001FCBC5 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		B2B5FD4224D9067F0027F7B9 /* VKResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKResponse.swift; sourceTree = "<group>"; };
 		B2B9EFD324A32CA30013305F /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		B2B9EFD624A32D990013305F /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
 		B2B9EFD824A330350013305F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -105,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B5FD4624D908870027F7B9 /* RealmSwift in Frameworks */,
 				B2BB747F24D4700F004C2264 /* Kingfisher in Frameworks */,
 				B2D7D0ED24D07FC400EB7BC1 /* WebKit.framework in Frameworks */,
 				B2D7D0F024D1B9B300EB7BC1 /* Alamofire in Frameworks */,
@@ -161,6 +165,7 @@
 				B2566BEA24D43ECD0046F0F5 /* VKUsersResponse.swift */,
 				B239AA2624D48941005D3776 /* VKGroupsResponse.swift */,
 				B239AA2A24D52840005D3776 /* VKPhotoResponse.swift */,
+				B2B5FD4224D9067F0027F7B9 /* VKResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -271,6 +276,7 @@
 			packageProductDependencies = (
 				B2D7D0EF24D1B9B300EB7BC1 /* Alamofire */,
 				B2BB747E24D4700F004C2264 /* Kingfisher */,
+				B2B5FD4524D908870027F7B9 /* RealmSwift */,
 			);
 			productName = VK_app;
 			productReference = B252494424972513004E3DDD /* VK_app.app */;
@@ -304,6 +310,7 @@
 			packageReferences = (
 				B2D7D0EE24D1B9B300EB7BC1 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				B2BB747D24D4700F004C2264 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				B2B5FD4424D908870027F7B9 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = B252494524972513004E3DDD /* Products */;
 			projectDirPath = "";
@@ -334,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B5FD4324D9067F0027F7B9 /* VKResponse.swift in Sources */,
 				B28E7BB524CDB9CD005F1E14 /* Session.swift in Sources */,
 				B239AA2724D48941005D3776 /* VKGroupsResponse.swift in Sources */,
 				B239AA2B24D52840005D3776 /* VKPhotoResponse.swift in Sources */,
@@ -564,6 +572,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B2B5FD4424D908870027F7B9 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.3;
+			};
+		};
 		B2BB747D24D4700F004C2264 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -583,6 +599,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B2B5FD4524D908870027F7B9 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2B5FD4424D908870027F7B9 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
 		B2BB747E24D4700F004C2264 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B2BB747D24D4700F004C2264 /* XCRemoteSwiftPackageReference "Kingfisher" */;

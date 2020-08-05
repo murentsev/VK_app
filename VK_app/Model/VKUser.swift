@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import RealmSwift
 
-class VKUser: Decodable {
-    var id: Int
-    var first_name: String
-    var last_name: String
-    var photo_200_orig: String
-    var online: Int
-    var city: VKCity?
+final class VKUser: Object, Decodable {
+    @objc dynamic var id: Int
+    @objc dynamic var first_name: String
+    @objc dynamic var last_name: String
+    @objc dynamic var photo_200_orig: String
+    @objc dynamic var online: Int
+    @objc dynamic var city: VKCity?
     var name: String {
         first_name + " " + last_name
     }
@@ -23,7 +24,7 @@ class VKUser: Decodable {
 //    }
 }
 
-class VKCity: Decodable {
-    var id: Int
-    var title: String
+final class VKCity: Object, Decodable {
+    @objc dynamic var id: Int
+    @objc dynamic var title: String
 }
