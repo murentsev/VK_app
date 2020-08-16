@@ -22,9 +22,17 @@ final class VKUser: Object, Decodable {
 //    var images: [VKPhoto] {
 //        
 //    }
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 final class VKCity: Object, Decodable {
     @objc dynamic var id: Int
     @objc dynamic var title: String
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }

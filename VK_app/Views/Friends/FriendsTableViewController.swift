@@ -8,10 +8,12 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 
 class FriendsTableViewController: UITableViewController, UISearchBarDelegate, searchViewDelegate {
  
     lazy var service = VKService()
+    lazy var realm = try! Realm()
     
     @IBOutlet weak var Search: SearchView!
     var filteredFriends: [VKUser] = []
@@ -22,14 +24,34 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate, se
     override func viewDidLoad() {
         super.viewDidLoad()
         Search.delegate = self
-        service.getData(.friends) {[weak self] friendsAnyArr in
-            let friendsArr = friendsAnyArr as! [VKUser]
-            self?.friends = friendsArr.sorted(by: {$0.name < $1.name})
-            self?.tableView.setContentOffset(CGPoint.init(x: 0, y: -20), animated: false)
-            self?.filteredFriends = friendsArr.sorted(by: {$0.name < $1.name})
-            self?.sections = Array(Set((self?.filteredFriends.map ({ $0.name.prefix(1).uppercased() }))!)).sorted()
+//        service.getData(.friends) {[weak self] (friendsArr: [VKUser]) in
+//            //let friendsArr = friendsAnyArr as! [VKUser]
+//            self?.friends = friendsArr.sorted(by: {$0.name < $1.name})
+//            self?.tableView.setContentOffset(CGPoint.init(x: 0, y: -20), animated: false)
+//            self?.filteredFriends = friendsArr.sorted(by: {$0.name < $1.name})
+//            self?.sections = Array(Set((self?.filteredFriends.map ({ $0.name.prefix(1).uppercased() }))!)).sorted()
+//            self?.tableView.reloadData()
+//        }
+        LoadFromCache()
+        
+        LoadFromNetwork()
+    }
+
+    func LoadFromCache() {
+        let friendsResult = realm.objects(VKUser.self)
+        friends = Array(friendsResult).sorted(by: {$0.name < $1.name})
+        filteredFriends = Array(friendsResult).sorted(by: {$0.name < $1.name})
+        sections = Array(Set((filteredFriends.map ({ $0.name.prefix(1).uppercased() })))).sorted()
+        tableView.setContentOffset(CGPoint.init(x: 0, y: -20), animated: false)
+        tableView.reloadData()
+    }
+    
+    func LoadFromNetwork() {
+        service.getData(.friends) { [weak self] (notUsed: [VKUser]) in
+            self?.LoadFromCache()
             self?.tableView.reloadData()
         }
+        tableView.setContentOffset(CGPoint.init(x: 0, y: -20), animated: false)
     }
 
     // MARK: - Table view data source
