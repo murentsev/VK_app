@@ -13,4 +13,8 @@ class VKGroup: Object, Decodable {
     @objc dynamic var id: Int
     @objc dynamic var name: String
     @objc dynamic var photo_200: String
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }

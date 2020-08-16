@@ -8,12 +8,14 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 
 private let reuseIdentifier = "Cell"
 
 class PhotoCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     lazy var service = VKService()
+    lazy var realm = try! Realm()
     
     let transitionController = TransitionController()
     
@@ -23,16 +25,25 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        service.getData(.photos, id: id) {[weak self] photosAnyArr in
-            let photosArr = photosAnyArr as! [VKPhoto]
-            self?.photos = photosArr
+        LoadFromCache()
+        LoadFromNetwork()
+    }
+    
+    func LoadFromCache() {
+        let photosResult = realm.objects(VKPhoto.self).filter("userId == %@", id)
+        photos = Array(photosResult)
+        collectionView.reloadData()
+    }
+    
+    func LoadFromNetwork() {
+        service.getData(.photos, id: id) { [weak self] (notUsed: [VKPhoto]) in
+            self?.LoadFromCache()
             self?.collectionView.reloadData()
         }
     }
-
+    
     // MARK: UICollectionViewDataSource
-
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -46,7 +57,6 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoCollectionViewCell
-        
         if let imgUrl = URL(string: photos[indexPath.row].sizes.last?.url ?? "") {
             let imgResource = ImageResource(downloadURL: imgUrl)
             cell.photo.kf.setImage(with: imgResource)

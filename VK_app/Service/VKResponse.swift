@@ -7,11 +7,11 @@
 //
 
 import Foundation
-//
-//class VKResponse: Decodable {
-//    var response: VKResponseItem<T>?
-//}
-//
-//class VKResponseItem<T: Decodable>: Decodable {
-//    var items: [T]
-//}
+
+class VKResponse<T: Decodable>: Decodable {
+    var response: VKResponseItem<T>
+}
+
+class VKResponseItem<T: Decodable>: Decodable {
+    var items: [T]
+}

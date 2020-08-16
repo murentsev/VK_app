@@ -23,10 +23,10 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.getData(.groupSearch) {[weak self] groupsAnyArr in
-                   let groupsArr = groupsAnyArr as! [VKGroup]
-                   self?.globalGroups = groupsArr
-                   self?.filteredGlobalGroups = groupsArr
+        service.getData(.groupSearch) {[weak self] (groupsAnyArr: [VKGroup]) in
+                //   let groupsArr = groupsAnyArr as! [VKGroup]
+                   self?.globalGroups = groupsAnyArr
+                   self?.filteredGlobalGroups = groupsAnyArr
                    self?.tableView.reloadData()
                }
         //tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
@@ -65,14 +65,24 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
       func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
           filteredGlobalGroups = globalGroups
           if !searchText.isEmpty {
-            service.getData(.groupSearch, groupSearch: searchText) {[weak self] groupsAnyArr in
-                let groupsArr = groupsAnyArr as! [VKGroup]
+            service.getData(.groupSearch, groupSearch: searchText) {[weak self] (groupsArr: [VKGroup]) in
+                //let groupsArr = groupsAnyArr as! [VKGroup]
                 self?.globalGroups = groupsArr
                 self?.filteredGlobalGroups = groupsArr
                 self?.tableView.reloadData()
             }
               //filteredGlobalGroups = globalGroups.filter({ $0.name.contains(searchText) })
-          }
+          } else {
+            service.getData(.groupSearch) {[weak self] (groupsArr: [VKGroup]) in
+                           //let groupsArr = groupsAnyArr as! [VKGroup]
+                           self?.globalGroups = groupsArr
+                           self?.filteredGlobalGroups = groupsArr
+                           self?.tableView.reloadData()
+                       }
+             
+        }
+        
+        
           //tableView.reloadData()
       }
     /*

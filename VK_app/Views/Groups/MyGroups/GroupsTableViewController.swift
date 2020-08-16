@@ -8,10 +8,12 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 
 class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
 
     lazy var service = VKService()
+    lazy var realm = try! Realm()
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
 //        guard
@@ -31,16 +33,33 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         //tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
         
-        service.getData(.groups) {[weak self] groupsAnyArr in
-            let groupsArr = groupsAnyArr as! [VKGroup]
-            self?.groups = groupsArr
-            self?.filteredGroups = groupsArr
-            self?.tableView.reloadData()
-        }
+//        service.getData(.groups) {[weak self] (groupsArr: [VKGroup]) in
+//          //  let groupsArr = groupsAnyArr as! [VKGroup]
+//            self?.groups = groupsArr
+//            self?.filteredGroups = groupsArr
+//            self?.tableView.reloadData()
+//        }
+        LoadFromCache()
+        tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
+        tableView.reloadData()
+        LoadFromNetwork()
         tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
         //filteredGroups = groups
     }
-
+    
+    
+    func LoadFromCache() {
+          let groupsResult = realm.objects(VKGroup.self)
+          groups = Array(groupsResult)
+          filteredGroups = Array(groupsResult)
+      }
+      
+      func LoadFromNetwork() {
+        service.getData(.groups) { [weak self] (notUsed: [VKGroup]) in
+              self?.LoadFromCache()
+              self?.tableView.reloadData()
+          }
+      }
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
