@@ -16,6 +16,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     
     lazy var service = VKService()
     lazy var realm = try! Realm()
+    var notificationToken: NotificationToken?
     
     let transitionController = TransitionController()
     
@@ -31,6 +32,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     
     func LoadFromCache() {
         let photosResult = realm.objects(VKPhoto.self).filter("userId == %@", id)
+        subscribeToNotifications(photosResult)
         photos = Array(photosResult)
         collectionView.reloadData()
     }
@@ -42,6 +44,18 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+      private func subscribeToNotifications(_ photosResult: Results<VKPhoto>) {
+            notificationToken = photosResult.observe {[weak self] (changes) in
+                switch changes {
+                case .initial:
+                 self?.collectionView.reloadData()
+                case .update:
+                    self?.collectionView.reloadData()
+                case let .error(error):
+                    print(error)
+                }
+            }
+        }
     // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {

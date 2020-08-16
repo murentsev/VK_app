@@ -14,6 +14,7 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate, se
  
     lazy var service = VKService()
     lazy var realm = try! Realm()
+    var notificationToken: NotificationToken?
     
     @IBOutlet weak var Search: SearchView!
     var filteredFriends: [VKUser] = []
@@ -24,26 +25,41 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate, se
     override func viewDidLoad() {
         super.viewDidLoad()
         Search.delegate = self
-//        service.getData(.friends) {[weak self] (friendsArr: [VKUser]) in
-//            //let friendsArr = friendsAnyArr as! [VKUser]
-//            self?.friends = friendsArr.sorted(by: {$0.name < $1.name})
-//            self?.tableView.setContentOffset(CGPoint.init(x: 0, y: -20), animated: false)
-//            self?.filteredFriends = friendsArr.sorted(by: {$0.name < $1.name})
-//            self?.sections = Array(Set((self?.filteredFriends.map ({ $0.name.prefix(1).uppercased() }))!)).sorted()
-//            self?.tableView.reloadData()
-//        }
+        subscribeToNotifications()
         LoadFromCache()
-        
         LoadFromNetwork()
+    }
+    
+    private func subscribeToNotifications() {
+       
     }
 
     func LoadFromCache() {
         let friendsResult = realm.objects(VKUser.self)
+        subscribeToNotifications(friendsResult)
         friends = Array(friendsResult).sorted(by: {$0.name < $1.name})
         filteredFriends = Array(friendsResult).sorted(by: {$0.name < $1.name})
         sections = Array(Set((filteredFriends.map ({ $0.name.prefix(1).uppercased() })))).sorted()
         tableView.setContentOffset(CGPoint.init(x: 0, y: -20), animated: false)
         tableView.reloadData()
+    }
+    
+    private func subscribeToNotifications(_ friendsResult: Results<VKUser>) {
+        notificationToken = friendsResult.observe {[weak self] (changes) in
+            switch changes {
+            case .initial:
+             self?.tableView.reloadData()
+            case let .update(_, deletions, insertions, modifications):
+                self?.tableView.reloadData()
+//             self?.tableView.beginUpdates()
+//             self?.tableView.insertRows(at: insertions.map {IndexPath(row: $0, section: ??? )}, with: .automatic)
+//             self?.tableView.deleteRows(at: deletions.map {IndexPath(row: $0, section: ??? )}, with: .automatic)
+//             self?.tableView.reloadRows(at: modifications.map {IndexPath(row: $0, section: ??? )}, with: .automatic)
+//             self?.tableView.endUpdates()
+            case let .error(error):
+                print(error)
+            }
+        }
     }
     
     func LoadFromNetwork() {

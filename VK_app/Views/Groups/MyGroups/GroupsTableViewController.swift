@@ -14,6 +14,7 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
 
     lazy var service = VKService()
     lazy var realm = try! Realm()
+    var notificationToken: NotificationToken?
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
 //        guard
@@ -50,6 +51,7 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
     
     func LoadFromCache() {
           let groupsResult = realm.objects(VKGroup.self)
+          subscribeToNotifications(groupsResult)
           groups = Array(groupsResult)
           filteredGroups = Array(groupsResult)
       }
@@ -60,6 +62,23 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
               self?.tableView.reloadData()
           }
       }
+    
+    private func subscribeToNotifications(_ groupsResult: Results<VKGroup>) {
+            notificationToken = groupsResult.observe {[weak self] (changes) in
+                switch changes {
+                case .initial:
+                 self?.tableView.reloadData()
+                case let .update(_, deletions, insertions, modifications):
+                 self?.tableView.beginUpdates()
+                 self?.tableView.insertRows(at: insertions.map {IndexPath(row: $0, section: 0)}, with: .automatic)
+                 self?.tableView.deleteRows(at: deletions.map {IndexPath(row: $0, section: 0)}, with: .automatic)
+                 self?.tableView.reloadRows(at: modifications.map {IndexPath(row: $0, section: 0)}, with: .automatic)
+                 self?.tableView.endUpdates()
+                case let .error(error):
+                    print(error)
+                }
+            }
+        }
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
