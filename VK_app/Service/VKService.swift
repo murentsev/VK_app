@@ -21,7 +21,7 @@ class VKService {
         case groupSearch
     }
     
-    func getData<T: Decodable>(_ method: VKMethod, id: Int = 0, groupSearch: String = " ", completion: @escaping ([T]) -> Void) {
+    func getData<T: Decodable>(_ method: VKMethod, id: Int = 0, groupSearch: String = " ", type: T.Type, completion: (([T]) -> Void)? = nil) {
         
         var vkm = ""
         var urlPath: String {
@@ -64,10 +64,10 @@ class VKService {
                     }
                     
                 }
-                completion(items)
+                completion?(items)
             } catch {
                     print(error)
-                completion([])
+                completion?([])
             }
         }
     }

@@ -23,7 +23,7 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.getData(.groupSearch) {[weak self] (groupsAnyArr: [VKGroup]) in
+        service.getData(.groupSearch, type: VKGroup.self) {[weak self] (groupsAnyArr: [VKGroup]) in
                 //   let groupsArr = groupsAnyArr as! [VKGroup]
                    self?.globalGroups = groupsAnyArr
                    self?.filteredGlobalGroups = groupsAnyArr
@@ -65,7 +65,7 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
       func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
           filteredGlobalGroups = globalGroups
           if !searchText.isEmpty {
-            service.getData(.groupSearch, groupSearch: searchText) {[weak self] (groupsArr: [VKGroup]) in
+            service.getData(.groupSearch, groupSearch: searchText, type: VKGroup.self) {[weak self] (groupsArr: [VKGroup]) in
                 //let groupsArr = groupsAnyArr as! [VKGroup]
                 self?.globalGroups = groupsArr
                 self?.filteredGlobalGroups = groupsArr
@@ -73,7 +73,7 @@ class GlobalGroupsTableViewController: UITableViewController, UISearchBarDelegat
             }
               //filteredGlobalGroups = globalGroups.filter({ $0.name.contains(searchText) })
           } else {
-            service.getData(.groupSearch) {[weak self] (groupsArr: [VKGroup]) in
+            service.getData(.groupSearch, type: VKGroup.self) {[weak self] (groupsArr: [VKGroup]) in
                            //let groupsArr = groupsAnyArr as! [VKGroup]
                            self?.globalGroups = groupsArr
                            self?.filteredGlobalGroups = groupsArr

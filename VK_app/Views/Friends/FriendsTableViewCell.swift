@@ -15,6 +15,11 @@ class FriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarView: AvatarView!
     @IBOutlet weak var friendCity: UILabel!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarView.imageView.image = nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         let tap = UITapGestureRecognizer(target: self, action: #selector(avatarTapped))

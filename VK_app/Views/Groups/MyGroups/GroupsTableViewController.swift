@@ -11,20 +11,21 @@ import Kingfisher
 import RealmSwift
 
 class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
-
+    
     lazy var service = VKService()
     lazy var realm = try! Realm()
     var notificationToken: NotificationToken?
+    var groupsResult: Results<VKGroup>!
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
-//        guard
-//            let globalGroupsController = segue.source as? GlobalGroupsTableViewController,
-//            let indexPath = globalGroupsController.tableView.indexPathForSelectedRow
-//            else { return }
-//        let group = globalGroupsController.globalGroups[indexPath.row]
-//        guard !groups.contains(group) else { return }
-//        groups.append(group)
-//        tableView.reloadData()
+        //        guard
+        //            let globalGroupsController = segue.source as? GlobalGroupsTableViewController,
+        //            let indexPath = globalGroupsController.tableView.indexPathForSelectedRow
+        //            else { return }
+        //        let group = globalGroupsController.globalGroups[indexPath.row]
+        //        guard !groups.contains(group) else { return }
+        //        groups.append(group)
+        //        tableView.reloadData()
     }
     
     var filteredGroups: [VKGroup] = []
@@ -32,75 +33,51 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
-        
-//        service.getData(.groups) {[weak self] (groupsArr: [VKGroup]) in
-//          //  let groupsArr = groupsAnyArr as! [VKGroup]
-//            self?.groups = groupsArr
-//            self?.filteredGroups = groupsArr
-//            self?.tableView.reloadData()
-//        }
-        LoadFromCache()
-        tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
-        tableView.reloadData()
+        subscribeToNotifications()
         LoadFromNetwork()
         tableView.setContentOffset(CGPoint.init(x: 0, y: 44), animated: false)
-        //filteredGroups = groups
     }
     
+    func LoadFromNetwork() {
+        service.getData(.groups, type: VKGroup.self)
+    }
     
-    func LoadFromCache() {
-          let groupsResult = realm.objects(VKGroup.self)
-          subscribeToNotifications(groupsResult)
-          groups = Array(groupsResult)
-          filteredGroups = Array(groupsResult)
-      }
-      
-      func LoadFromNetwork() {
-        service.getData(.groups) { [weak self] (notUsed: [VKGroup]) in
-              self?.LoadFromCache()
-              self?.tableView.reloadData()
-          }
-      }
-    
-    private func subscribeToNotifications(_ groupsResult: Results<VKGroup>) {
-            notificationToken = groupsResult.observe {[weak self] (changes) in
-                switch changes {
-                case .initial:
-                 self?.tableView.reloadData()
-                case let .update(_, deletions, insertions, modifications):
-                 self?.tableView.beginUpdates()
-                 self?.tableView.insertRows(at: insertions.map {IndexPath(row: $0, section: 0)}, with: .automatic)
-                 self?.tableView.deleteRows(at: deletions.map {IndexPath(row: $0, section: 0)}, with: .automatic)
-                 self?.tableView.reloadRows(at: modifications.map {IndexPath(row: $0, section: 0)}, with: .automatic)
-                 self?.tableView.endUpdates()
-                case let .error(error):
-                    print(error)
-                }
+    private func subscribeToNotifications() {
+        groupsResult = realm.objects(VKGroup.self)
+        notificationToken = groupsResult.observe {[weak self] (changes) in
+            switch changes {
+            case .initial(let groupsResult):
+                self?.filteredGroups = Array(groupsResult)
+                self?.tableView.reloadData()
+            case .update(let groupsResult, _, _, _):
+                self?.filteredGroups = Array(groupsResult)
+                self?.tableView.reloadData()
+            case let .error(error):
+                print(error)
             }
         }
+    }
+    
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredGroups.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GroupsTableViewCell
         
         cell.groupName.text = filteredGroups[indexPath.row].name
         if let imgUrl = URL(string: filteredGroups[indexPath.row].photo_200) {
-                   let imgResource = ImageResource(downloadURL: imgUrl)
-                   cell.groupImage.kf.setImage(with: imgResource)
-                   cell.groupImage.contentMode = .scaleAspectFill
-               }
-       // cell.groupImage.image = filteredGroups[indexPath.row].image
+            let imgResource = ImageResource(downloadURL: imgUrl)
+            cell.groupImage.kf.setImage(with: imgResource)
+            cell.groupImage.contentMode = .scaleAspectFill
+        }
         cell.makeRounded()
         
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             groups.remove(at: indexPath.row)
@@ -115,11 +92,11 @@ class GroupsTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredGroups = groups
+        filteredGroups = Array(groupsResult)
         if !searchText.isEmpty {
-            filteredGroups = groups.filter({ $0.name.contains(searchText) })
+            filteredGroups = filteredGroups.filter({ $0.name.contains(searchText) })
         }
         tableView.reloadData()
     }
-
+    
 }
