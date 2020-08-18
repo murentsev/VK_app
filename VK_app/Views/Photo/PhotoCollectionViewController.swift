@@ -16,6 +16,8 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     
     lazy var service = VKService()
     lazy var realm = try! Realm()
+    var notificationToken: NotificationToken?
+    var photosResult: Results<VKPhoto>!
     
     let transitionController = TransitionController()
     
@@ -25,33 +27,37 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        LoadFromCache()
+        subscribeToNotifications()
         LoadFromNetwork()
     }
     
-    func LoadFromCache() {
-        let photosResult = realm.objects(VKPhoto.self).filter("userId == %@", id)
-        photos = Array(photosResult)
-        collectionView.reloadData()
+    func LoadFromNetwork() {
+        service.getData(.photos, id: id, type: VKPhoto.self)
     }
     
-    func LoadFromNetwork() {
-        service.getData(.photos, id: id) { [weak self] (notUsed: [VKPhoto]) in
-            self?.LoadFromCache()
-            self?.collectionView.reloadData()
+    private func subscribeToNotifications() {
+        photosResult = realm.objects(VKPhoto.self).filter("userId == %@", id)
+        notificationToken = photosResult.observe {[weak self] (changes) in
+            switch changes {
+            case .initial(let photosResult):
+                self?.photos = Array(photosResult)
+                self?.collectionView.reloadData()
+            case .update(let photosResult, _, _, _):
+                self?.photos = Array(photosResult)
+                self?.collectionView.reloadData()
+            case let .error(error):
+                print(error)
+            }
         }
     }
-    
     // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return photos.count
     }
 
@@ -88,7 +94,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-           guard //segue.identifier == "fullScreeen",
+           guard
                 let destination = segue.destination as? FullScreenPhotoViewController,
                 let indexPath = self.collectionView.indexPathsForSelectedItems?.first,
                 let cell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell
