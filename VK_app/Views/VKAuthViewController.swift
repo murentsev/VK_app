@@ -9,10 +9,16 @@
 import UIKit
 import WebKit
 import Alamofire
+import FirebaseDatabase
 
 class VKAuthViewController: UIViewController, WKNavigationDelegate {
     
- 
+    lazy var service = VKService()
+    lazy var database = Database.database()
+    lazy var ref: DatabaseReference = self.database.reference(withPath: "users")
+    
+    var firstName = ""
+    var lastName = ""
     
     @IBOutlet weak var webView: WKWebView! {
         didSet {
@@ -67,9 +73,13 @@ class VKAuthViewController: UIViewController, WKNavigationDelegate {
                 return dict
         }
         
-        guard let token = params["access_token"] else { return }
-        
+        guard
+            let token = params["access_token"],
+            let userId = params["user_id"]
+        else { return }
         Session.instance.token = token
+        Session.instance.userId = userId
+        addUserToFirebase(userId)
         
         performSegue(withIdentifier: "Home", sender: nil)
 //        getData(token: token, method: vkMethods.friends)
@@ -80,6 +90,10 @@ class VKAuthViewController: UIViewController, WKNavigationDelegate {
         decisionHandler(.cancel)
     }
     
+    func addUserToFirebase(_ userId: String) {
+        let user = FirebaseVKUser(id: userId)
+        ref.child(userId).setValue(user.toDictionary())
+    }
     
     
    

@@ -19,6 +19,7 @@ class VKService {
         case photos
         case groups
         case groupSearch
+        case addGroup
     }
     
     func getData<T: Decodable>(_ method: VKMethod, id: Int = 0, groupSearch: String = " ", type: T.Type, completion: (([T]) -> Void)? = nil) {
@@ -45,29 +46,33 @@ class VKService {
         case .groupSearch:
             vkm = "groups.search"
             parameters["q"] = groupSearch //значение строки поиска
+        case .addGroup:
+            vkm = "groups.join"
+            parameters["group_id"] = id
         }
         
         AF.request(urlPath, parameters: parameters).responseData { [weak self] (response) in
             print(response.value ?? "No json")
             guard let data = response.value else { return }
-            do {
-                let items = try JSONDecoder().decode(VKResponse<T>.self, from: data).response.items
-                if method != .groupSearch {
-                    if method == .photos {
-                        items
-                            .map{ $0 as? VKPhoto }
-                            .forEach { $0?.userId = id    
+            if method != .addGroup {
+                do {
+                    let items = try JSONDecoder().decode(VKResponse<T>.self, from: data).response.items
+                    if method != .groupSearch {
+                        if method == .photos {
+                            items
+                                .map{ $0 as? VKPhoto }
+                                .forEach { $0?.userId = id
+                            }
+                        }
+                        if let items = items as? [Object] {
+                            self?.saveData(items)
                         }
                     }
-                    if let items = items as? [Object] {
-                       self?.saveData(items)
-                    }
-                    
-                }
-                completion?(items)
-            } catch {
+                    completion?(items)
+                } catch {
                     print(error)
-                completion?([])
+                    completion?([])
+                }
             }
         }
     }
