@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 import RealmSwift
 
+
 class FriendsTableViewController: UITableViewController, UISearchBarDelegate, searchViewDelegate {
  
     lazy var service = VKService()

@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import Firebase
 
 final class VKUser: Object, Decodable {
     @objc dynamic var id: Int
@@ -36,3 +37,30 @@ final class VKCity: Object, Decodable {
         return "id"
     }
 }
+
+final class FirebaseVKUser {
+    let id: String
+    var groups: [FirebaseVKGroup]?
+    
+    init(id: String) {
+        self.id = id
+    }
+    
+    init?(snapshot: DataSnapshot) {
+        guard
+            let value = snapshot.value as? [String: Any],
+            let id = value["id"] as? String
+            else {
+                return nil
+        }
+        self.id = id
+    }
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "id" : id
+        ]
+    }
+}
+
+
