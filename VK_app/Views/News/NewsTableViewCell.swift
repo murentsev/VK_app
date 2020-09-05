@@ -15,25 +15,25 @@ class NewsTableViewCell: UITableViewCell {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var newsTextLabel: UILabel!
-    @IBOutlet weak var collectionView: UICollectionView!
+   // @IBOutlet weak var collectionView: UICollectionView!
     
     
     func configure(model: NewsModel) {
-        mainImage.avatarImage = model.images.first
+        mainImage.avatarImage = model.images?.first
         authorLabel.text = model.author
         dateLabel.text = model.postDate
         newsTextLabel.text = model.text
         
-        collectionView.register(UINib(nibName: "PhotoNewsCollectionViewCell", bundle: nil),
-                                forCellWithReuseIdentifier: "cell")
+//        collectionView.register(UINib(nibName: "PhotoNewsCollectionViewCell", bundle: nil),
+//                                forCellWithReuseIdentifier: "cell")
     }
     
-    func setCollectionDelegate(_ delegate: UICollectionViewDataSource & UICollectionViewDelegate, for row: Int) {
-        collectionView.dataSource = delegate
-        collectionView.delegate = delegate
-        collectionView.tag = row
-        collectionView.reloadData()
-    }
+//    func setCollectionDelegate(_ delegate: UICollectionViewDataSource & UICollectionViewDelegate, for row: Int) {
+//        collectionView.dataSource = delegate
+//        collectionView.delegate = delegate
+//        collectionView.tag = row
+//        collectionView.reloadData()
+//    }
     
     
 }

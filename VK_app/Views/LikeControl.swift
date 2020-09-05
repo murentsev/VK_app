@@ -96,6 +96,23 @@ import UIKit
         label.text = "\(0)"
         return label
     }()
+    
+    lazy var viewsButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "eye"), for: .normal)
+        button.tintColor = .black
+        //button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+        //    button.backgroundColor = .red
+        return button
+    }()
+
+    lazy var countViewsLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
+        label.text = "\(0)"
+        return label
+    }()
 
 
     lazy var mainStackView: UIStackView = {
@@ -130,6 +147,14 @@ import UIKit
         stackView.spacing = 5
         return stackView
     }()
+    
+    lazy var viewsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        return stackView
+    }()
 
     // MARK: - Init
 
@@ -148,6 +173,7 @@ import UIKit
         mainStackView.addSubview(likeStackView)
         mainStackView.addSubview(commentStackView)
         mainStackView.addSubview(shareStackView)
+        mainStackView.addSubview(viewsStackView)
 
         
         NSLayoutConstraint.activate([
@@ -168,6 +194,10 @@ import UIKit
             shareStackView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             shareStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 5),
             shareStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 160),
+            
+            viewsStackView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            viewsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 5),
+            viewsStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 260),
 
         ])
 
@@ -177,6 +207,8 @@ import UIKit
         commentStackView.addArrangedSubview(countCommenLabel)
         shareStackView.addArrangedSubview(shareButton)
         shareStackView.addArrangedSubview(countShareLabel)
+        viewsStackView.addArrangedSubview(viewsButton)
+        viewsStackView.addArrangedSubview(countViewsLabel)
     }
 
     // MARK: - Actions
