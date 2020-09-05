@@ -47,6 +47,8 @@
 		B2B9EFE724A375920013305F /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B9EFE624A375920013305F /* PhotoCollectionViewCell.swift */; };
 		B2BB747F24D4700F004C2264 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B2BB747E24D4700F004C2264 /* Kingfisher */; };
 		B2C4E0FF24EDB5AA00DA731D /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C4E0FE24EDB5AA00DA731D /* ProfileInfo.swift */; };
+		B2CCB1BE2503BCB200E20E4B /* NewsTableViewCellPhoto.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2CCB1BD2503BCB200E20E4B /* NewsTableViewCellPhoto.xib */; };
+		B2CCB1C02503D99D00E20E4B /* NewsTableViewCellPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CCB1BF2503D99D00E20E4B /* NewsTableViewCellPhoto.swift */; };
 		B2D7D0ED24D07FC400EB7BC1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D7D0EC24D07FC400EB7BC1 /* WebKit.framework */; };
 		B2D7D0F024D1B9B300EB7BC1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B2D7D0EF24D1B9B300EB7BC1 /* Alamofire */; };
 		B2DB71DE24C92D5700B9F704 /* TransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DB71DD24C92D5700B9F704 /* TransitionController.swift */; };
@@ -99,6 +101,8 @@
 		B2B9EFE424A3757C0013305F /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
 		B2B9EFE624A375920013305F /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		B2C4E0FE24EDB5AA00DA731D /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
+		B2CCB1BD2503BCB200E20E4B /* NewsTableViewCellPhoto.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsTableViewCellPhoto.xib; sourceTree = "<group>"; };
+		B2CCB1BF2503D99D00E20E4B /* NewsTableViewCellPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCellPhoto.swift; sourceTree = "<group>"; };
 		B2D7D0EC24D07FC400EB7BC1 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		B2DB71DD24C92D5700B9F704 /* TransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionController.swift; sourceTree = "<group>"; };
 		B2E26E6824CD7A4700F6C9A2 /* AnimationContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationContoller.swift; sourceTree = "<group>"; };
@@ -186,7 +190,9 @@
 			children = (
 				B25CC3D524B421030015A2FB /* NewsTableViewController.swift */,
 				B25CC3DB24B42FD70015A2FB /* NewsTableViewCell.swift */,
+				B2CCB1BF2503D99D00E20E4B /* NewsTableViewCellPhoto.swift */,
 				B25CC3DC24B42FD70015A2FB /* NewsTableViewCell.xib */,
+				B2CCB1BD2503BCB200E20E4B /* NewsTableViewCellPhoto.xib */,
 				B25CC3DF24B43A850015A2FB /* PhotoNewsCollectionViewCell.swift */,
 				B25CC3E024B43A850015A2FB /* PhotoNewsCollectionViewCell.xib */,
 			);
@@ -350,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2729E9524ED82E70042122F /* GoogleService-Info.plist in Resources */,
+				B2CCB1BE2503BCB200E20E4B /* NewsTableViewCellPhoto.xib in Resources */,
 				B252496024972576004E3DDD /* Main.storyboard in Resources */,
 				B25CC3E224B43A850015A2FB /* PhotoNewsCollectionViewCell.xib in Resources */,
 				B252495424972514004E3DDD /* LaunchScreen.storyboard in Resources */,
@@ -408,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C4E0FF24EDB5AA00DA731D /* ProfileInfo.swift in Sources */,
+				B2CCB1C02503D99D00E20E4B /* NewsTableViewCellPhoto.swift in Sources */,
 				B2B5FD4324D9067F0027F7B9 /* VKResponse.swift in Sources */,
 				B28E7BB524CDB9CD005F1E14 /* Session.swift in Sources */,
 				B2566BE924D3B8DE0046F0F5 /* VKUser.swift in Sources */,
